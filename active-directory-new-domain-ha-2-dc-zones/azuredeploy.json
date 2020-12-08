@@ -76,6 +76,7 @@
     "adSubnetName": "adSubnet",
     "adSubnet": "10.10.10.0/24",
     "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('adSubnetName'))]",
+    "networkSecurityGroupName": "adNetworkSecurityGroup",
     "publicIPSKU": "Standard",
     "publicIPAddressName": "adPublicIp",
     "publicIPAddressType": "Static",
@@ -84,13 +85,14 @@
     },
     "vnetTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/vnet.json', parameters('_artifactsLocationSasToken')))]",
     "nicTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/nic.json', parameters('_artifactsLocationSasToken')))]",
+    "nsgTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/updateSubnet.json', parameters('_artifactsLocationSasToken')))]",
     "vmName": [
-      "adPDC",
-      "adBDC"
+      "DC01",
+      "DC02"
     ],
     "nicName": [
-      "adPDCNic",
-      "adBDCNic"
+      "DC01Nic",
+      "DC02CNic"
     ],
     "ipAddress": [
       "10.10.10.10",
@@ -142,6 +144,46 @@
           },
           "subnetRange": {
             "value": "[variables('adSubnet')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2019-02-01",
+      "name": "[variables('networkSecurityGroupName')]",
+      "location": "[parameters('location')]",
+      "tags": {},
+      "properties": {
+        "securityRules": [{}]
+      },
+      "dependsOn": [
+        "CreateVNet",
+        "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIPAddressName'))]"
+      ]
+    },
+    {
+      "apiVersion": "2020-06-01",
+      "name": "CreateNSG",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('nsgTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "virtualNetworkName": {
+            "value": "[variables('virtualNetworkName')]"
+          },
+          "subnetName": {
+            "value": "[variables('adSubnetName')]"
+          },
+          "nsgId": {
+            "value": "[resourceId('Microsoft.Network/publicIpAddresses', variables('networkSecurityGroupName'))]"
           },
           "location": {
             "value": "[parameters('location')]"
