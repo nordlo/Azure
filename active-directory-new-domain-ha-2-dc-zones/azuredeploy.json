@@ -182,6 +182,9 @@
           "subnetName": {
             "value": "[variables('adSubnetName')]"
           },
+          "subnetAddressPrefix": {
+            "value": "[variables('adSubnet')]"
+          },
           "nsgId": {
             "value": "[resourceId('Microsoft.Network/publicIpAddresses', variables('networkSecurityGroupName'))]"
           },
