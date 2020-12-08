@@ -92,7 +92,7 @@
     ],
     "nicName": [
       "DC01Nic",
-      "DC02CNic"
+      "DC02Nic"
     ],
     "ipAddress": [
       "10.10.10.10",
@@ -152,6 +152,35 @@
       }
     },
     {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2019-02-01",
+      "name": "[variables('nicName')[copyIndex()]]",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "nicLoop",
+        "count": 2
+      },
+      "dependsOn": [
+        "CreateVNet",
+        "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIPAddressName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[variables('iPAddress')[copyIndex()]]",
+              "publicIPAddress": "[if(equals(copyIndex(), 0), variables('publicIpAddressId'), json('null'))]",
+              "subnet": {
+                "id": "[variables('adSubnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2019-02-01",
       "name": "[variables('networkSecurityGroupName')]",
@@ -161,8 +190,7 @@
         "securityRules": [{}]
       },
       "dependsOn": [
-        "CreateVNet",
-        "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIPAddressName'))]"
+        "CreateVNet"
       ]
     },
     {
@@ -192,35 +220,6 @@
             "value": "[parameters('location')]"
           }
         }
-      }
-    },
-    {
-      "type": "Microsoft.Network/networkInterfaces",
-      "apiVersion": "2019-02-01",
-      "name": "[variables('nicName')[copyIndex()]]",
-      "location": "[parameters('location')]",
-      "copy": {
-        "name": "nicLoop",
-        "count": 2
-      },
-      "dependsOn": [
-        "CreateVNet",
-        "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIPAddressName'))]"
-      ],
-      "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[variables('iPAddress')[copyIndex()]]",
-              "publicIPAddress": "[if(equals(copyIndex(), 0), variables('publicIpAddressId'), json('null'))]",
-              "subnet": {
-                "id": "[variables('adSubnetRef')]"
-              }
-            }
-          }
-        ]
       }
     },
     {
