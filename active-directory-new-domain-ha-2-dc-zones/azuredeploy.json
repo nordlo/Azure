@@ -190,7 +190,8 @@
         "securityRules": [{}]
       },
       "dependsOn": [
-        "CreateVNet"
+        "CreateVNet",
+        "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIPAddressName'))]"
       ]
     },
     {
