@@ -186,9 +186,6 @@
       "name": "[variables('networkSecurityGroupName')]",
       "location": "[parameters('location')]",
       "tags": {},
-      "properties": {
-        "securityRules": [{}]
-      },
       "dependsOn": [
         "CreateVNet",
         "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIPAddressName'))]"
@@ -200,7 +197,7 @@
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
         "CreateVNet",
-        "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIPAddressName'))]"
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
       ],
       "properties": {
         "mode": "Incremental",
