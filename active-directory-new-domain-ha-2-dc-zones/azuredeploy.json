@@ -198,6 +198,10 @@
       "apiVersion": "2020-06-01",
       "name": "CreateNSG",
       "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "CreateVNet",
+        "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIPAddressName'))]"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
