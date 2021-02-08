@@ -47,7 +47,7 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_D2s_v3",
+      "defaultValue": "Standard_B2s",
       "metadata": {
         "description": "Size of the VM for the controller"
       }
@@ -70,11 +70,11 @@
   "variables": {
     "imagePublisher": "MicrosoftWindowsServer",
     "imageOffer": "WindowsServer",
-    "imageSKU": "2019-Datacenter",
+    "imageSKU": "2019-Datacenter-Core",
     "virtualNetworkName": "adVNET",
-    "virtualNetworkAddressRange": "10.10.0.0/16",
+    "virtualNetworkAddressRange": "10.170.0.0/16",
     "adSubnetName": "adSubnet",
-    "adSubnet": "10.10.10.0/24",
+    "adSubnet": "10.170.10.0/24",
     "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('adSubnetName'))]",
     "networkSecurityGroupName": "adNetworkSecurityGroup",
     "publicIPSKU": "Standard",
@@ -95,8 +95,8 @@
       "DC02Nic"
     ],
     "ipAddress": [
-      "10.10.10.10",
-      "10.10.10.11"
+      "10.170.10.10",
+      "10.170.10.11"
     ],
     "configureADBDCTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/configureADBDC.json', parameters('_artifactsLocationSasToken')))]",
     "adBDCConfigurationModulesURL": "[uri(parameters('_artifactsLocation'), 'DSC/ConfigureADBDC.ps1.zip')]",
