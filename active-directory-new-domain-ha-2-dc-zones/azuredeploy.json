@@ -74,7 +74,7 @@
     "virtualNetworkName": "VNET",
     "virtualNetworkAddressRange": "10.10.0.0/16",
     "adSubnetName": "adSubnet",
-    "adSubnet": "10.110.10.0/24",
+    "adSubnet": "10.10.10.0/24",
     "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('adSubnetName'))]",
     "networkSecurityGroupName": "adNetworkSecurityGroup",
     "publicIPSKU": "Standard",
