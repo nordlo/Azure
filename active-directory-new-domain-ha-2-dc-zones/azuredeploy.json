@@ -256,6 +256,7 @@
             "version": "latest"
           },
           "osDisk": {
+            "diskSizeGB": 64,
             "caching": "ReadOnly",
             "createOption": "FromImage",
             "managedDisk": {
@@ -264,7 +265,7 @@
           },
           "dataDisks": [
             {
-              "diskSizeGB": 64,
+              "diskSizeGB": 32,
               "lun": 0,
               "createOption": "Empty"
             }
