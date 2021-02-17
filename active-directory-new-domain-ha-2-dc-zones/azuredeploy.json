@@ -72,9 +72,9 @@
     "imageOffer": "WindowsServer",
     "imageSKU": "2019-Datacenter-Core",
     "virtualNetworkName": "VNET-Base",
-    "virtualNetworkAddressRange": "10.171.0.0/16",
+    "virtualNetworkAddressRange": "10.170.0.0/16",
     "adSubnetName": "adSubnet",
-    "adSubnet": "10.171.10.0/24",
+    "adSubnet": "10.170.10.0/24",
     "adSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('adSubnetName'))]",
     "networkSecurityGroupName": "adNetworkSecurityGroup",
     "publicIPSKU": "Standard",
@@ -87,16 +87,16 @@
     "nicTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/nic.json', parameters('_artifactsLocationSasToken')))]",
     "nsgTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/updateSubnet.json', parameters('_artifactsLocationSasToken')))]",
     "vmName": [
-      "TKL-AZ-DC01",
-      "TKL-AZ-DC02"
+      "BRA-AZ-DC01",
+      "BRA-AZ-DC02"
     ],
     "nicName": [
-      "TKL-AZ-DC01Nic",
-      "TKL-AZ-DC02Nic"
+      "BRA-AZ-DC01Nic",
+      "BRA-AZ-DC02Nic"
     ],
     "ipAddress": [
-      "10.171.10.10",
-      "10.171.10.11"
+      "10.170.10.10",
+      "10.170.10.11"
     ],
     "configureADBDCTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nestedtemplates/configureADBDC.json', parameters('_artifactsLocationSasToken')))]",
     "adBDCConfigurationModulesURL": "[uri(parameters('_artifactsLocation'), 'DSC/ConfigureADBDC.ps1.zip')]",
